@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import PostService from './post.service';
 import AuthGuard from '../guard/auth.guard';
-import { CreatePost, FindByPage } from './post.dto';
+import { CreatePost, FindByPage, UpdatePost } from './post.dto';
 import { User } from '@prisma/client';
 
 @UseGuards(AuthGuard)
@@ -19,5 +19,10 @@ export class PostController {
   findByPage(@Body() data: FindByPage, @Req() req: Request) {
     const user = req['user'] as User;
     return this.postService.findByPage(data.page, data.size, user.id);
+  }
+
+  @Post('update')
+  updatePost(@Body() post: UpdatePost) {
+    return this.postService.updatePost(post);
   }
 }

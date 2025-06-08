@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePost } from './post.dto';
+import { CreatePost, UpdatePost } from './post.dto';
 import { PrismaService } from '../global/prisma.service';
 
 @Injectable()
@@ -21,6 +21,16 @@ export default class PostService {
       skip: (page - 1) * size,
       take: size,
       orderBy: { updateTime: 'desc' },
+    });
+  }
+
+  updatePost(post: UpdatePost) {
+    return this.ps.post.update({
+      where: { id: post.id },
+      data: {
+        title: post.title,
+        text: post.text,
+      },
     });
   }
 }

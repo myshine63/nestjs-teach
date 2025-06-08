@@ -21,3 +21,8 @@ export class PostInfo extends CreatePost {
   updateTime: string;
   user: UserInfo;
 }
+
+export class UpdatePost extends CreatePost {
+  @IsInt()
+  id: number;
+}
