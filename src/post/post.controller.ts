@@ -15,7 +15,7 @@ export class PostController {
     return this.postService.createPost(post, user.id);
   }
 
-  @Post('list/page')
+  @Post('list')
   findByPage(@Body() data: FindByPage, @Req() req: Request) {
     const user = req['user'] as User;
     return this.postService.findByPage(data.page, data.size, user.id);
