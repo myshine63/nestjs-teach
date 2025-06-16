@@ -1,7 +1,15 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import PostService from './post.service';
 import AuthGuard from '../guard/auth.guard';
-import { CreatePost, FindByPage, UpdatePost } from './post.dto';
+import { CreatePost, FindByPage, SearchPost, UpdatePost } from './post.dto';
 import { User } from '@prisma/client';
 
 @UseGuards(AuthGuard)
@@ -24,5 +32,15 @@ export class PostController {
   @Post('update')
   updatePost(@Body() post: UpdatePost) {
     return this.postService.updatePost(post);
+  }
+
+  @Delete('delete/:id')
+  deletePost(@Param('id') id: string) {
+    return this.postService.deletePost(Number(id));
+  }
+
+  @Post('list/time')
+  findPostsByTime(@Body() data: SearchPost) {
+    return this.postService.listPostsByTime(data);
   }
 }

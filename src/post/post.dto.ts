@@ -26,3 +26,10 @@ export class UpdatePost extends CreatePost {
   @IsInt()
   id: number;
 }
+
+export class SearchPost {
+  @IsInt()
+  startTime: number;
+  @IsInt()
+  endTime: number;
+}

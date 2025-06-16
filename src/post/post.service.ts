@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePost, UpdatePost } from './post.dto';
+import { CreatePost, SearchPost, UpdatePost } from './post.dto';
 import { PrismaService } from '../global/prisma.service';
 
 @Injectable()
@@ -30,6 +30,23 @@ export default class PostService {
       data: {
         title: post.title,
         text: post.text,
+      },
+    });
+  }
+
+  deletePost(postId: number) {
+    return this.ps.post.delete({ where: { id: postId } });
+  }
+
+  listPostsByTime(data: SearchPost) {
+    const start = new Date(data.startTime);
+    const end = new Date(data.endTime);
+    return this.ps.post.findMany({
+      where: {
+        createTime: {
+          gte: start,
+          lte: end,
+        },
       },
     });
   }
